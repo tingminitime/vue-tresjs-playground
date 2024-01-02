@@ -6,7 +6,8 @@ import { OrbitControls, vLightHelper, vAlwaysLookAt } from '@tresjs/cientos'
 import { TresCanvasProps } from '@tresjs/core/dist/components/TresCanvas.vue.js'
 import { useTweakpane } from '@/composables/useTweakpane'
 
-const { objectState, lightState } = useTweakpane()
+const { objectState, pointLightState, spotLightState, rectAreaLightState } =
+  useTweakpane()
 
 const canvasProps = reactive<TresCanvasProps>({
   windowSize: true,
@@ -17,9 +18,39 @@ const canvasProps = reactive<TresCanvasProps>({
   outputColorSpace: SRGBColorSpace,
 })
 
-const lightPosition = computed<[number, number, number]>(() => {
-  return [lightState.position.x, lightState.position.y, lightState.position.z]
+const pointLightPosition = computed<[number, number, number]>(() => {
+  return [
+    pointLightState.position.x,
+    pointLightState.position.y,
+    pointLightState.position.z,
+  ]
 })
+
+const spotLightPosition = computed<[number, number, number]>(() => {
+  return [
+    spotLightState.position.x,
+    spotLightState.position.y,
+    spotLightState.position.z,
+  ]
+})
+
+const rectAreaLightPosition = computed<[number, number, number]>(() => {
+  return [
+    rectAreaLightState.position.x,
+    rectAreaLightState.position.y,
+    rectAreaLightState.position.z,
+  ]
+})
+
+const rectAreaLightAlwaysLookAtPosition = computed<[number, number, number]>(
+  () => {
+    return [
+      rectAreaLightState.alwaysLookAt.x,
+      rectAreaLightState.alwaysLookAt.y,
+      rectAreaLightState.alwaysLookAt.z,
+    ]
+  },
+)
 </script>
 
 <template>
@@ -37,7 +68,7 @@ const lightPosition = computed<[number, number, number]>(() => {
 
     <!-- Object -->
     <TresGroup :position="[0, 2, 0]">
-      <TresMesh>
+      <TresMesh cast-shadow>
         <TresTorusGeometry :args="[1, 0.4, 32, 32]" />
         <TresMeshStandardMaterial
           :color="new Color('#e4fa76')"
@@ -53,7 +84,10 @@ const lightPosition = computed<[number, number, number]>(() => {
         <TresMeshStandardMaterial :wireframe="objectState.wireframe" />
       </TresMesh>
     </TresGroup>
-    <TresMesh :rotate-x="-Math.PI / 2">
+    <TresMesh
+      :rotate-x="-Math.PI / 2"
+      receive-shadow
+    >
       <TresPlaneGeometry :args="[10, 10]" />
       <TresMeshStandardMaterial :color="new Color('#ffffff')" />
     </TresMesh>
@@ -64,30 +98,43 @@ const lightPosition = computed<[number, number, number]>(() => {
       :intensity="1"
       v-light-helper
     /> -->
-    <!-- <TresDirectionalLight
+    <TresDirectionalLight
       ref="directionRef"
       :color="new Color('#fffacd')"
       :intensity="3"
       :position="[2, 4, 5]"
+      cast-shadow
       v-light-helper
-    /> -->
+    />
     <!-- <TresHemisphereLight
       :args="['orangered', 'gold', 5]"
       v-light-helper
     /> -->
-    <TresPointLight
-      :args="['yellow', 2, 10]"
-      :color="new Color('yellow')"
-      v-bind:position="lightPosition"
-      :intensity="lightState.intensity"
-      :distance="lightState.distance"
-      :decay="lightState.decay"
+    <!-- <TresPointLight
+      :color="new Color(pointLightState.color)"
+      :intensity="pointLightState.intensity"
+      :position="pointLightPosition"
+      :distance="pointLightState.distance"
+      :decay="pointLightState.decay"
+      v-light-helper
+    /> -->
+    <TresSpotLight
+      :color="new Color(spotLightState.color)"
+      :intensity="spotLightState.intensity"
+      :position="spotLightPosition"
+      :angle="spotLightState.angle"
+      :distance="spotLightState.distance"
+      :decay="spotLightState.decay"
+      :penumbra="spotLightState.penumbra"
       v-light-helper
     />
     <TresRectAreaLight
-      :args="['hotpink', 2, 5, 5]"
-      :position="[0, 1, 2]"
-      v-always-look-at="[-4, 0, 0]"
+      :color="new Color(rectAreaLightState.color)"
+      :intensity="rectAreaLightState.intensity"
+      :width="rectAreaLightState.width"
+      :height="rectAreaLightState.height"
+      :position="rectAreaLightPosition"
+      v-always-look-at="rectAreaLightAlwaysLookAtPosition"
     />
   </TresCanvas>
 </template>

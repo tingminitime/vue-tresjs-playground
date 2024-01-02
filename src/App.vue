@@ -4,10 +4,8 @@ import TheLightScene from './components/TheLightScene.vue'
 </script>
 
 <template>
-  <div>
-    <!-- <TheExample /> -->
-    <TheLightScene />
-  </div>
+  <!-- <TheExample /> -->
+  <TheLightScene />
 </template>
 
 <style scope></style>

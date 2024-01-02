@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Mesh, PerspectiveCamera } from 'three'
 import { Color, SRGBColorSpace } from 'three'
-import { reactive, shallowRef, watch } from 'vue'
+import { reactive, shallowRef, watch, onMounted } from 'vue'
 import { TresCanvas, useRenderLoop } from '@tresjs/core'
 import { OrbitControls, CameraControls } from '@tresjs/cientos'
 import { TresCanvasProps } from '@tresjs/core/dist/components/TresCanvas.vue.js'
@@ -77,12 +77,12 @@ onLoop(({ delta, elapsed }) => {
       :position="[0, 0, 0]"
     >
       <!-- Geometry -->
-      <!-- <TresBoxGeometry :args="[1, 1, 1]" /> -->
+      <TresBoxGeometry :args="[1, 1, 1]" />
       <!-- <TresSphereGeometry :args="[1, 24, 24, 0, Math.PI]" /> -->
       <!-- <TresConeGeometry :args="[1, 2, 32]" /> -->
       <!-- <TresTorusGeometry :args="[1, 0.4, 16, 100]" /> -->
       <!-- <TresTorusKnotGeometry :args="[1, 0.4, 100, 100]" /> -->
-      <TresBufferGeometry :position="[positionArray, 3]" />
+      <!-- <TresBufferGeometry :position="[positionArray, 3]" /> -->
 
       <!-- Material -->
       <!-- <TresMeshNormalMaterial :wireframe="state.wireframe" /> -->
