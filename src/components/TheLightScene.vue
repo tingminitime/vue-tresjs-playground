@@ -68,18 +68,27 @@ const rectAreaLightAlwaysLookAtPosition = computed<[number, number, number]>(
 
     <!-- Object -->
     <TresGroup :position="[0, 2, 0]">
-      <TresMesh cast-shadow>
+      <TresMesh
+        cast-shadow
+        receive-shadow
+      >
         <TresTorusGeometry :args="[1, 0.4, 32, 32]" />
         <TresMeshStandardMaterial
           :color="new Color('#e4fa76')"
           :wireframe="objectState.wireframe"
         />
       </TresMesh>
-      <TresMesh :position="[4, 0, 0]">
+      <TresMesh
+        :position="[2, 2, 2]"
+        cast-shadow
+      >
         <TresBoxGeometry :args="[2, 2, 2]" />
         <TresMeshStandardMaterial :wireframe="objectState.wireframe" />
       </TresMesh>
-      <TresMesh :position="[-4, 0, 0]">
+      <TresMesh
+        :position="[-4, 0, 0]"
+        cast-shadow
+      >
         <TresTorusKnotGeometry :args="[1, 0.4, 100, 100]" />
         <TresMeshStandardMaterial :wireframe="objectState.wireframe" />
       </TresMesh>
@@ -102,8 +111,13 @@ const rectAreaLightAlwaysLookAtPosition = computed<[number, number, number]>(
       ref="directionRef"
       :color="new Color('#fffacd')"
       :intensity="3"
-      :position="[2, 4, 5]"
+      :position="[2, 6, 5]"
       cast-shadow
+      :shadow-mapSize-width="2048"
+      :shadow-mapSize-height="2048"
+      :shadow-radius="10"
+      :shadow-camera-near="0.1"
+      :shadow-camera-far="10"
       v-light-helper
     />
     <!-- <TresHemisphereLight

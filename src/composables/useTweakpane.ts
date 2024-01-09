@@ -60,11 +60,11 @@ export function useTweakpane() {
   })
 
   const rectAreaLightState = reactive<RectAreaLightState>({
-    color: '#ffffff',
+    color: '#ffd700',
     intensity: 2,
     position: { x: 0, y: 0, z: 0 },
-    width: 5,
-    height: 5,
+    width: 2,
+    height: 2,
     alwaysLookAt: { x: 0, y: 0, z: 0 },
   })
 
